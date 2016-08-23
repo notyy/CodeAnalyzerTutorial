@@ -10,7 +10,7 @@ object SourceCode{
   def fromFile(path: Path):SourceCode = {
     import scala.io._
 
-    val source = Source.fromFile("/Users/twer/source/scala/CodeAnalyzerTutorial/build.sbt")
+    val source = Source.fromFile(path)
     val lines = source.getLines.toList
     new SourceCode(path,path.split("/").last, lines)
   }
