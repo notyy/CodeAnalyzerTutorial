@@ -1,4 +1,4 @@
-package lesson2And3And4
+package tutor
 
 import org.scalatest.{FunSpec, ShouldMatchers}
 

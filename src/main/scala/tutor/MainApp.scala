@@ -1,4 +1,4 @@
-package lesson2And3And4
+package tutor
 
 object MainApp extends App{
   if(args.length < 1){

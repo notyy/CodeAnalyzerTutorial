@@ -1,4 +1,4 @@
-package lesson2And3And4
+package tutor
 
 class SourceCode(val path: String, val name: String, private val lines: List[String]) {
   def count: Int = lines.length
