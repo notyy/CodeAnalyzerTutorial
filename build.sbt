@@ -88,7 +88,7 @@ exportJars := true
 // only show stack traces up to the first sbt stack frame
 traceLevel := 0
 
-mainClass in assembly := Some("lesson2And3And4.MainApp")
+mainClass in assembly := Some("tutor.MainApp")
 
 // add SWT to the unmanaged classpath
 // unmanagedJars in Compile += file("/usr/share/java/swt.jar")
