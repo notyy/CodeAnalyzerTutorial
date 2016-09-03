@@ -20,17 +20,17 @@ class DirectoryScanner {
         }
         else acc + (fileType -> 1)
       } else {
-//        acc ++ scan(f.getAbsolutePath)   this is wrong!!!
+        //        acc ++ scan(f.getAbsolutePath)   this is wrong!!!
         mergeAppend(acc, scan(f.getAbsolutePath))
       }
     }
   }
 
-  def mergeAppend(map1:Map[FileType, Int], map2:Map[FileType, Int]): Map[FileType, Int] = {
-    map2.foldLeft(map1){ case (m1,(m2k,m2v)) =>
-      if(m1.contains(m2k)){
+  def mergeAppend(map1: Map[FileType, Int], map2: Map[FileType, Int]): Map[FileType, Int] = {
+    map2.foldLeft(map1) { case (m1, (m2k, m2v)) =>
+      if (m1.contains(m2k)) {
         m1.updated(m2k, m1(m2k) + m2v)
-      }else{
+      } else {
         m1 + (m2k -> m2v)
       }
     }
