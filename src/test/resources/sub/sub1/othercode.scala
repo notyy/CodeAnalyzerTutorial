@@ -1,10 +1,10 @@
 package tutor
 
-class SourceCode(val path: String, val name: String, private val lines: List[String]) {
+class OtherCode(val path: String, val name: String, private val lines: List[String]) {
   def count: Int = lines.length
 }
 
-object SourceCode {
+object OtherCode {
   def fromFile(path: Path): SourceCode = {
     import scala.io._
 
