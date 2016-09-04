@@ -14,8 +14,8 @@ object MainApp extends App{
       val sourceCode = SourceCode.fromFile(path)
       println(s"name: ${sourceCode.name}      lines: ${sourceCode.count}")
     }else{
-      val ds = new DirectoryScanner
-      ds.scan(path).foreach{
+      val ds = new CodebaseAnalyzer with DirectoryScanner
+      ds.countFileNum(path).foreach{
         case (fileType, count) => println(s"$fileType     $count")
       }
     }
