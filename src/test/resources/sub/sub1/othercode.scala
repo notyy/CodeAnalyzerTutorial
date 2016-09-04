@@ -5,12 +5,12 @@ class OtherCode(val path: String, val name: String, private val lines: List[Stri
 }
 
 object OtherCode {
-  def fromFile(path: Path): SourceCode = {
+  def fromFile(path: Path): SourceCodeInfo = {
     import scala.io._
 
     val source = Source.fromFile(path)
     val lines = source.getLines.toList
-    new SourceCode(path, extractLocalPath(path), lines)
+    new SourceCodeInfo(path, extractLocalPath(path), lines)
   }
 
 }

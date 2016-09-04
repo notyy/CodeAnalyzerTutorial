@@ -5,7 +5,7 @@ import tutor.utils.FileUtil._
 
 
 trait CodebaseAnalyzer {
-  this: DirectoryScanner =>
+  this: DirectoryScanner with SourceCodeAnalyzer =>
 
   type FileType = String
 
