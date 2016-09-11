@@ -3,17 +3,16 @@ package tutor
 import tutor.utils.FileUtil
 import tutor.utils.FileUtil._
 
+case class CodebaseInfo(fileTypeNums: Map[String, Int])
 
 trait CodebaseAnalyzer {
   this: DirectoryScanner with SourceCodeAnalyzer =>
 
-  type FileType = String
-
-  def countFileNum(path: Path): Map[FileType, Int] = {
+  def countFileNum(path: Path): CodebaseInfo = {
     countFileTypeNum(scan(path))
   }
 
-  private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {
-    files.groupBy(FileUtil.extractExtFileName).mapValues(_.length)
+  private[tutor] def countFileTypeNum(files: Seq[Path]): CodebaseInfo = {
+    CodebaseInfo(files.groupBy(FileUtil.extractExtFileName).mapValues(_.length))
   }
 }
