@@ -1,12 +1,13 @@
 package tutor
 
-import java.io.File
+import java.io.{BufferedWriter, File, FileWriter, Writer}
 
 import tutor.utils.FileUtil.Path
+import tutor.utils.WriteSupport
 
-object MainApp extends App with ReportFormatter {
+object MainApp extends App with ReportFormatter with WriteSupport {
   if (args.length < 1) {
-    println("usage: CodeAnalyzer FilePath")
+    println("usage: CodeAnalyzer FilePath [-oOutputfile]")
   } else {
     val path: Path = args(0)
     val file = new File(path)
@@ -16,7 +17,15 @@ object MainApp extends App with ReportFormatter {
     } else {
       format(analyzer.analyze(path))
     }
-    println(rs)
+    if (args.length > 1) {
+      val output = args(1).drop(2)
+      withWriter(output) {
+        _.write(rs)
+      }
+      println(s"report saved into $output")
+    } else {
+      println(rs)
+    }
   }
 
 }
