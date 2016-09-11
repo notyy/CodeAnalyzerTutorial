@@ -10,6 +10,10 @@ trait CodebaseAnalyzer {
   type FileType = String
 
   def countFileNum(path: Path): Map[FileType, Int] = {
-    scan(path).groupBy(FileUtil.extractExtFileName).mapValues(_.length)
+    countFileTypeNum(scan(path))
+  }
+
+  private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {
+    files.groupBy(FileUtil.extractExtFileName).mapValues(_.length)
   }
 }
