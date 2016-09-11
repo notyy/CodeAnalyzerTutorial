@@ -23,7 +23,7 @@ trait CodebaseAnalyzer {
   }
 
   private[tutor] def longestFile(sourceCodeInfos: Seq[SourceCodeInfo]): SourceCodeInfo = {
-    sourceCodeInfos.sortBy(_.count).last
+    sourceCodeInfos.sorted.last
   }
 
   private[tutor] def top10Files(sourceCodeInfos: Seq[SourceCodeInfo]): Seq[SourceCodeInfo] = {
