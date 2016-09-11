@@ -3,7 +3,7 @@ package tutor
 import tutor.utils.FileUtil._
 import tutor.utils.FileUtil
 
-case class SourceCodeInfo(path: String, name: String, count: Int)
+case class SourceCodeInfo(path: String, localPath: String, count: Int)
 
 trait SourceCodeAnalyzer {
   def processFile(path: Path): SourceCodeInfo = {

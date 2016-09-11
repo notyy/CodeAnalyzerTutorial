@@ -14,7 +14,7 @@ object MainApp extends App with ReportFormatter {
     val rs = if (file.isFile) {
       format(analyzer.processFile(file.getAbsolutePath))
     } else {
-      format(analyzer.countFileNum(path))
+      format(analyzer.analyze(path))
     }
     println(rs)
   }
