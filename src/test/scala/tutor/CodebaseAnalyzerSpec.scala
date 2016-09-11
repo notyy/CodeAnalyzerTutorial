@@ -17,6 +17,9 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
     }
   }
 
+  val aInfo: SourceCodeInfo = SourceCodeInfo("a.scala", "a.scala", 10)
+  val bInfo: SourceCodeInfo = SourceCodeInfo("b.scala", "b.scala", 5)
+
   describe("CodebaseAnalyzer") {
     it("can count file numbers by type") {
       val ls = List("a.scala", "b.scala", "c.sbt", "d")
@@ -26,8 +29,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
       ds.analyze("anypath").avgLineCount shouldBe 7.5
     }
     it("can find longest file") {
-      val aInfo: SourceCodeInfo = SourceCodeInfo("a.scala", "a.scala", 10)
-      val bInfo: SourceCodeInfo = SourceCodeInfo("b.scala", "b.scala", 5)
+
       ds.longestFile(List(aInfo, bInfo)) shouldBe aInfo
     }
     it("will return top 10 longest files"){
@@ -35,6 +37,9 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
       val top10LongFiles = ds.top10Files(sourceCodeInfos)
       top10LongFiles should have size 10
       top10LongFiles should not contain SourceCodeInfo("1.scala","1.scala",1)
+    }
+    it("can count total line numbers"){
+      ds.totalLineCount(List(aInfo, bInfo)) shouldBe 15
     }
   }
 }

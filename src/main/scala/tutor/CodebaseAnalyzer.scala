@@ -3,7 +3,7 @@ package tutor
 import tutor.utils.FileUtil
 import tutor.utils.FileUtil._
 
-case class CodebaseInfo(fileTypeNums: Map[String, Int], avgLineCount: Double,
+case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avgLineCount: Double,
                         longestFileInfo: SourceCodeInfo,
                         top10Files: Seq[SourceCodeInfo]
                        )
@@ -15,7 +15,7 @@ trait CodebaseAnalyzer {
     val files = scan(path)
     val sourceCodeInfoes: Seq[SourceCodeInfo] = files.map(processFile)
     val avgLineCount = sourceCodeInfoes.map(_.count).sum.toDouble / files.length
-    CodebaseInfo(countFileTypeNum(files), avgLineCount, longestFile(sourceCodeInfoes), top10Files(sourceCodeInfoes))
+    CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfoes),avgLineCount, longestFile(sourceCodeInfoes), top10Files(sourceCodeInfoes))
   }
 
   private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {
@@ -28,5 +28,9 @@ trait CodebaseAnalyzer {
 
   private[tutor] def top10Files(sourceCodeInfos: Seq[SourceCodeInfo]): Seq[SourceCodeInfo] = {
     sourceCodeInfos.sortBy(_.count).reverse.take(10)
+  }
+
+  private[tutor] def totalLineCount(sourceCodeInfos: Seq[SourceCodeInfo]): Int = {
+    sourceCodeInfos.map(_.count).sum
   }
 }

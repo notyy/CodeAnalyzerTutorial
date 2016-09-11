@@ -8,6 +8,7 @@ trait ReportFormatter {
     }.mkString("\n") ++
       "\n" ++
       ReportFormatter.separator ++ "\n\n" ++
+      s"total line count: ${codebaseInfo.totalLineCount}" ++ "\n" ++
       s"avg line count: ${codebaseInfo.avgLineCount}" ++ "\n" ++
       s"longest file: ${longestFileInfo.localPath}    ${longestFileInfo.count}" ++
       "\n" ++
