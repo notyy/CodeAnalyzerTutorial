@@ -1,6 +1,6 @@
 package tutor
 
-import java.io.{BufferedWriter, File, FileWriter, Writer}
+import java.io.File
 
 import tutor.utils.FileUtil.Path
 import tutor.utils.WriteSupport
