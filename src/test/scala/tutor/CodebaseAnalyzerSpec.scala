@@ -25,5 +25,11 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
     it("can analyze avg file count"){
       ds.analyze("anypath").avgLineCount shouldBe 7.5
     }
+    it("can find longest file"){
+      val aInfo: SourceCodeInfo = SourceCodeInfo("a.scala", "a.scala", 10)
+      val bInfo: SourceCodeInfo = SourceCodeInfo("b.scala", "b.scala", 5)
+      ds.longestFile(List(aInfo,bInfo)) shouldBe aInfo
+    }
   }
+
 }
