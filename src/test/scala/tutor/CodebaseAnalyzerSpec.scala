@@ -23,7 +23,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
   describe("CodebaseAnalyzer") {
     it("can count file numbers by type") {
       val ls = List("a.scala", "b.scala", "c.sbt", "d")
-      ds.countFileTypeNum(ls) should contain theSameElementsAs Map(("scala", 2), (FileUtil.EmptyFileType, 1), ("sbt", 1))
+      ds.countFileTypeNum(ls) should contain theSameElementsAs Map[String,Int](("scala", 2), (FileUtil.EmptyFileType, 1), ("sbt", 1))
     }
     it("can analyze avg file count") {
       ds.analyze("anypath").avgLineCount shouldBe 7.5
