@@ -13,9 +13,9 @@ trait CodebaseAnalyzer {
 
   def analyze(path: Path): CodebaseInfo = {
     val files = scan(path)
-    val sourceCodeInfoes: Seq[SourceCodeInfo] = files.map(processFile)
-    val avgLineCount = sourceCodeInfoes.map(_.count).sum.toDouble / files.length
-    CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfoes),avgLineCount, longestFile(sourceCodeInfoes), top10Files(sourceCodeInfoes))
+    val sourceCodeInfos: Seq[SourceCodeInfo] = files.map(processFile)
+    val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
+    CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos),avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos))
   }
 
   private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {
