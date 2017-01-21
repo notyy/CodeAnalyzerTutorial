@@ -26,7 +26,6 @@ trait DirectoryScanner extends StrictLogging {
         if (f.isFile && shouldAccept(f.getPath, knownFileTypes)) {
           acc :+ filePath
         } else if (f.isDirectory && (!ignoreFolders.contains(FileUtil.extractLocalPath(f.getPath)))) {
-          logger.info(s"directory $filePath scanned and added")
           acc ++ scan(filePath, knownFileTypes, ignoreFolders)
         } else {
           acc
