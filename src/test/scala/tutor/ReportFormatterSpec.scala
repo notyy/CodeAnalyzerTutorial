@@ -15,8 +15,8 @@ class ReportFormatterSpec extends FunSpec with ShouldMatchers {
       val codebaseInfo = CodebaseInfo(Map("sbt" -> 1, "scala" -> 2, FileUtil.EmptyFileType -> 1),
         totalLineCount = 15,
         avgLineCount = 7.5,
-        SourceCodeInfo("a.scala", "a.scala", 10), {
-          for (i <- 10 to 1 by -1) yield SourceCodeInfo(s"$i.scala", s"$i.scala", i)
+        SourceCodeInfo("absolute/a.scala", "a.scala", 10), {
+          for (i <- 10 to 1 by -1) yield SourceCodeInfo(s"absolute/$i.scala", s"$i.scala", i)
         }
       )
       rf.format(codebaseInfo) shouldBe
@@ -28,20 +28,20 @@ class ReportFormatterSpec extends FunSpec with ShouldMatchers {
            |
            |total line count: 15
            |avg line count: 7.5
-           |longest file: a.scala    10
+           |longest file: absolute/a.scala    10
            |${ReportFormatter.separator}
            |
            |top 10 long files
-           |10.scala    10
-           |9.scala    9
-           |8.scala    8
-           |7.scala    7
-           |6.scala    6
-           |5.scala    5
-           |4.scala    4
-           |3.scala    3
-           |2.scala    2
-           |1.scala    1
+           |absolute/10.scala    10
+           |absolute/9.scala    9
+           |absolute/8.scala    8
+           |absolute/7.scala    7
+           |absolute/6.scala    6
+           |absolute/5.scala    5
+           |absolute/4.scala    4
+           |absolute/3.scala    3
+           |absolute/2.scala    2
+           |absolute/1.scala    1
         """.trim.stripMargin
     }
   }

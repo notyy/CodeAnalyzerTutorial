@@ -10,12 +10,12 @@ trait ReportFormatter {
       ReportFormatter.separator ++ "\n\n" ++
       s"total line count: ${codebaseInfo.totalLineCount}" ++ "\n" ++
       s"avg line count: ${codebaseInfo.avgLineCount}" ++ "\n" ++
-      s"longest file: ${longestFileInfo.localPath}    ${longestFileInfo.count}" ++
+      s"longest file: ${longestFileInfo.path}    ${longestFileInfo.count}" ++
       "\n" ++
       ReportFormatter.separator ++ "\n\n" ++
       "top 10 long files\n" ++
       codebaseInfo.top10Files.map {
-        s => s"${s.localPath}    ${s.count}"
+        s => s"${s.path}    ${s.count}"
       }.mkString("\n")
   }
 
