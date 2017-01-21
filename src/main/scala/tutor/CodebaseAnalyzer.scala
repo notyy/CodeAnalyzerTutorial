@@ -11,8 +11,8 @@ case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avg
 trait CodebaseAnalyzer {
   this: DirectoryScanner with SourceCodeAnalyzer =>
 
-  def analyze(path: Path, knownFileTypes: Set[String]): Option[CodebaseInfo] = {
-    val files = scan(path, knownFileTypes)
+  def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
+    val files = scan(path, knownFileTypes,ignoreFolders)
     if (files.isEmpty) {
       None
     } else {

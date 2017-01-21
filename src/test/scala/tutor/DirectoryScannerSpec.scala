@@ -8,7 +8,7 @@ class DirectoryScannerSpec extends FunSpec with ShouldMatchers {
     it("can scan directory recursively and return all file paths" +
       " and it should only accept known txt files"){
       val ds = new DirectoryScanner {}
-      val files = ds.scan("src/test/resources", Set("scala","java"))
+      val files = ds.scan("src/test/fixture", Set("scala","java"), Set("target"))
       files.length shouldBe 2
       FileUtil.extractLocalPath(files.head) shouldBe "SomeCode.scala"
     }

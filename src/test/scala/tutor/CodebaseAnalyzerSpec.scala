@@ -7,7 +7,7 @@ import tutor.utils.FileUtil.Path
 class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
 
   val codeBaseAnalyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer {
-    override def scan(path: Path, knowFileTypes: Set[String]): Seq[Path] = List("a.scala", "b.scala", "c.sbt", "d")
+    override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = List("a.scala", "b.scala", "c.sbt", "d")
 
     override def processFile(path: Path): SourceCodeInfo = path match {
       case "a.scala" => SourceCodeInfo(path, path, 10)
@@ -26,7 +26,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
       codeBaseAnalyzer.countFileTypeNum(ls) should contain theSameElementsAs Map[String, Int](("scala", 2), (FileUtil.EmptyFileType, 1), ("sbt", 1))
     }
     it("can analyze avg file count") {
-      codeBaseAnalyzer.analyze("anypath", KnowFileTypes.knownFileTypes).get.avgLineCount shouldBe 7.5
+      codeBaseAnalyzer.analyze("anypath", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders).get.avgLineCount shouldBe 7.5
     }
     it("can find longest file") {
       codeBaseAnalyzer.longestFile(List(aInfo, bInfo)) shouldBe aInfo
@@ -42,7 +42,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
     }
     it("when directory scanner returns empty, code analyzer should return None") {
       val emptyCodeAnalyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer {
-        override def scan(path: Path, knowFileTypes: Set[String]): Seq[Path] = Vector[Path]()
+        override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = Vector[Path]()
 
         override def processFile(path: Path): SourceCodeInfo = path match {
           case "a.scala" => SourceCodeInfo(path, path, 10)
@@ -51,7 +51,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
           case "d" => SourceCodeInfo(path, path, 5)
         }
       }
-      emptyCodeAnalyzer.analyze("anypath", KnowFileTypes.knownFileTypes) shouldBe None
+      emptyCodeAnalyzer.analyze("anypath", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders) shouldBe None
     }
   }
 }

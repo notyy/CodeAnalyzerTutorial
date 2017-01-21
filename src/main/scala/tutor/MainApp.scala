@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
+import tutor.PresetFilters.{ignoreFolders, knownFileTypes}
 import tutor.utils.FileUtil.Path
 import tutor.utils.WriteSupport
 
@@ -20,7 +21,7 @@ object MainApp extends App with ReportFormatter with WriteSupport with StrictLog
     } else {
       logger.info("start analyzing...")
       val beginTime = new Date
-      val anayRs = analyzer.analyze(path, KnowFileTypes.knownFileTypes).map(format).getOrElse("not result found")
+      val anayRs = analyzer.analyze(path, knownFileTypes, ignoreFolders).map(format).getOrElse("not result found")
       logger.info("analyze complete")
       val endTime = new Date
       val elapsed = new Date(endTime.getTime - beginTime.getTime)
