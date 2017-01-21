@@ -6,8 +6,6 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 import tutor.utils.FileUtil
 import tutor.utils.FileUtil.Path
 
-import scala.annotation.tailrec
-
 trait DirectoryScanner extends StrictLogging {
   /**
     * recursively scan given directory, get all file path whose ext is in knownFileTypes Set
