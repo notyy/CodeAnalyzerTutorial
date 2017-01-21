@@ -8,7 +8,7 @@ import scala.util.{Success, Try}
 
 class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
 
-  val codeBaseAnalyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer {
+  val codeBaseAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer {
     override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = List("a.scala", "b.scala", "c.sbt", "d")
 
     override def processFile(path: Path): Try[SourceCodeInfo] = path match {
@@ -43,7 +43,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
       codeBaseAnalyzer.totalLineCount(List(aInfo, bInfo)) shouldBe 15
     }
     it("when directory scanner returns empty, code analyzer should return None") {
-      val emptyCodeAnalyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer {
+      val emptyCodeAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer {
         override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = Vector[Path]()
 
         override def processFile(path: Path): Try[SourceCodeInfo] = ???

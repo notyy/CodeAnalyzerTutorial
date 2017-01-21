@@ -19,7 +19,7 @@ trait CodebaseAnalyzer {
       None
     } else {
       val sourceCodeInfos: Seq[SourceCodeInfo] = BenchmarkUtil.record("processing each file") {
-        files.map(processFile).filter(_.isSuccess).map(_.get)
+        processSourceFiles(files)
       }
       BenchmarkUtil.record("make last result") {
         val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
@@ -27,6 +27,9 @@ trait CodebaseAnalyzer {
       }
     }
   }
+
+
+  protected def processSourceFiles(files: Seq[Path]): Seq[SourceCodeInfo]
 
   private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {
     files.groupBy(FileUtil.extractExtFileName).mapValues(_.length)
