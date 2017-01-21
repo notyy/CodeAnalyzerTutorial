@@ -16,7 +16,6 @@ trait DirectoryScanner extends StrictLogging {
     * @return
     */
   def scan(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = {
-    logger.info(s"scanning $path for known file types $knownFileTypes")
     val files = new File(path).listFiles()
     if (files == null) {
       logger.warn(s"$path is not a legal directory")
@@ -35,7 +34,6 @@ trait DirectoryScanner extends StrictLogging {
   }
 
   private def shouldAccept(path: Path, knownFileTypes: Set[String]): Boolean = {
-    logger.info(s"check if should accept $path")
     knownFileTypes.contains(FileUtil.extractExtFileName(path))
   }
 }

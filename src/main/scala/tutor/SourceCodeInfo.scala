@@ -19,7 +19,6 @@ object SourceCodeInfo {
 trait SourceCodeAnalyzer extends StrictLogging {
   def processFile(path: Path): Try[SourceCodeInfo] = {
     import scala.io._
-    logger.info(s"processing $path")
     Try {
       val source = Source.fromFile(path)
       val lines = source.getLines.toList
