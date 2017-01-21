@@ -22,10 +22,12 @@ trait DirectoryScanner extends StrictLogging {
       Vector[Path]()
     } else {
       files.foldLeft(Vector[Path]()) { (acc, f) =>
+        val filePath = f.getAbsolutePath
         if (f.isFile && shouldAccept(f.getPath, knownFileTypes)) {
-          acc :+ f.getAbsolutePath
+          acc :+ filePath
         } else if (f.isDirectory && (!ignoreFolders.contains(FileUtil.extractLocalPath(f.getPath)))) {
-          acc ++ scan(f.getAbsolutePath, knownFileTypes, ignoreFolders)
+          logger.info(s"directory $filePath scanned and added")
+          acc ++ scan(filePath, knownFileTypes, ignoreFolders)
         } else {
           acc
         }
