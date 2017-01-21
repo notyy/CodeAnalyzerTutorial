@@ -1,5 +1,6 @@
 package tutor
 
+import com.typesafe.scalalogging.slf4j.StrictLogging
 import tutor.utils.FileUtil._
 import tutor.utils.FileUtil
 
@@ -10,10 +11,10 @@ object SourceCodeInfo{
   }
 }
 
-trait SourceCodeAnalyzer {
+trait SourceCodeAnalyzer extends StrictLogging{
   def processFile(path: Path): SourceCodeInfo = {
     import scala.io._
-
+    logger.info(s"processing $path")
     val source = Source.fromFile(path)
     val lines = source.getLines.toList
     SourceCodeInfo(path, FileUtil.extractLocalPath(path), lines.length)
