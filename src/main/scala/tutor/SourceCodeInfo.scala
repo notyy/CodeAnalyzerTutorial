@@ -21,8 +21,12 @@ trait SourceCodeAnalyzer extends StrictLogging {
     import scala.io._
     Try {
       val source = Source.fromFile(path)
-      val lines = source.getLines.toList
-      SourceCodeInfo(path, FileUtil.extractLocalPath(path), lines.length)
+      try {
+        val lines = source.getLines.toList
+        SourceCodeInfo(path, FileUtil.extractLocalPath(path), lines.length)
+      }finally {
+        source.close()
+      }
     }
   }
 }
