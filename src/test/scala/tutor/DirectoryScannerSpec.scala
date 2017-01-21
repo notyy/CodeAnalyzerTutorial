@@ -5,11 +5,12 @@ import tutor.utils.FileUtil
 
 class DirectoryScannerSpec extends FunSpec with ShouldMatchers {
   describe("DirectoryScanner"){
-    it("can scan directory recursively and return all file paths"){
+    it("can scan directory recursively and return all file paths" +
+      " and it should only accept known txt files"){
       val ds = new DirectoryScanner {}
-      val files = ds.scan("src/test/resources")
-      files.length shouldBe 3
-      FileUtil.extractLocalPath(files.head) shouldBe "sourceFileSample"
+      val files = ds.scan("src/test/resources", Set("scala","java"))
+      files.length shouldBe 2
+      FileUtil.extractLocalPath(files.head) shouldBe "SomeCode.scala"
     }
   }
 }

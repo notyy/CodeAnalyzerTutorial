@@ -11,8 +11,8 @@ case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avg
 trait CodebaseAnalyzer {
   this: DirectoryScanner with SourceCodeAnalyzer =>
 
-  def analyze(path: Path): CodebaseInfo = {
-    val files = scan(path)
+  def analyze(path: Path, knownFileTypes: Set[String]): CodebaseInfo = {
+    val files = scan(path,knownFileTypes)
     val sourceCodeInfos: Seq[SourceCodeInfo] = files.map(processFile)
     val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
     CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos),avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos))
