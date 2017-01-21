@@ -16,7 +16,7 @@ trait CodebaseAnalyzer {
     if (files.isEmpty) {
       None
     } else {
-      val sourceCodeInfos: Seq[SourceCodeInfo] = files.par.map(processFile).filter(_.isSuccess).map(_.get).toVector
+      val sourceCodeInfos: Seq[SourceCodeInfo] = files.map(processFile).filter(_.isSuccess).map(_.get)
       val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
       Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
     }
