@@ -25,7 +25,7 @@ object MainApp extends App with ReportFormatter with WriteSupport with StrictLog
       logger.info("analyze complete")
       val endTime = new Date
       val elapsed = new Date(endTime.getTime - beginTime.getTime)
-      val sdf = new SimpleDateFormat("hh:mm:ss.SSS")
+      val sdf = new SimpleDateFormat("mm:ss.SSS")
       logger.info(s"total elapsed ${sdf.format(elapsed)}")
       anayRs
     }
