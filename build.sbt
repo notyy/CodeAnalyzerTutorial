@@ -15,7 +15,18 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
   "org.slf4j" % "slf4j-api" % "1.7.7",
   "ch.qos.logback" % "logback-classic" % "1.1.2",
-  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
+  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+  "com.typesafe.akka" %% "akka-actor" % "2.4.7",
+  "com.typesafe.akka" %% "akka-http-core" % "2.4.7",
+  "com.typesafe.akka" %% "akka-http-testkit" % "2.4.7",
+  "com.typesafe.akka" %% "akka-persistence" % "2.4.7",
+  "com.typesafe.akka" %% "akka-persistence-tck" % "2.4.7",
+  "com.typesafe.akka" %% "akka-slf4j" % "2.4.7",
+  "com.typesafe.akka" %% "akka-stream" % "2.4.7",
+  "com.typesafe.akka" %% "akka-stream-testkit" % "2.4.7",
+  "com.typesafe.akka" %% "akka-testkit" % "2.4.7",
+  "com.typesafe.akka" %% "akka-http-experimental" % "2.4.7",
+  "com.typesafe.akka" %% "akka-http-jackson-experimental" % "2.4.7"
 )
 
 //   TODO reopen it later
