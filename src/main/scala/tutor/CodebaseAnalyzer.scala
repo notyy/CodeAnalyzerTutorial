@@ -11,11 +11,15 @@ case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avg
 trait CodebaseAnalyzer {
   this: DirectoryScanner with SourceCodeAnalyzer =>
 
-  def analyze(path: Path, knownFileTypes: Set[String]): CodebaseInfo = {
-    val files = scan(path,knownFileTypes)
-    val sourceCodeInfos: Seq[SourceCodeInfo] = files.map(processFile)
-    val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
-    CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos),avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos))
+  def analyze(path: Path, knownFileTypes: Set[String]): Option[CodebaseInfo] = {
+    val files = scan(path, knownFileTypes)
+    if (files.isEmpty) {
+      None
+    } else {
+      val sourceCodeInfos: Seq[SourceCodeInfo] = files.map(processFile)
+      val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
+      Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
+    }
   }
 
   private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {

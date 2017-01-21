@@ -16,18 +16,22 @@ trait DirectoryScanner extends StrictLogging {
     */
   def scan(path: Path, knownFileTypes: Set[String]): Seq[Path] = {
     logger.info(s"scanning $path for known file types $knownFileTypes")
-    val file = new File(path)
-    val files = file.listFiles()
-    files.foldLeft(Vector[Path]()) { (acc, f) =>
-      if (f.isFile) {
-        if(shouldAccept(f.getPath, knownFileTypes)) {
-          logger.info(s"add file to fold ${f.getAbsolutePath}")
-          acc :+ f.getAbsolutePath
-        }else{
-          acc
+    val files = new File(path).listFiles()
+    if (files == null) {
+      logger.warn(s"$path is not a legal directory")
+      Vector[Path]()
+    } else {
+      files.foldLeft(Vector[Path]()) { (acc, f) =>
+        if (f.isFile) {
+          if (shouldAccept(f.getPath, knownFileTypes)) {
+            logger.info(s"add file to fold ${f.getAbsolutePath}")
+            acc :+ f.getAbsolutePath
+          } else {
+            acc
+          }
+        } else {
+          acc ++ scan(f.getAbsolutePath, knownFileTypes)
         }
-      } else {
-        acc ++ scan(f.getAbsolutePath, knownFileTypes)
       }
     }
   }

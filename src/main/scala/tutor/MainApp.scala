@@ -15,7 +15,7 @@ object MainApp extends App with ReportFormatter with WriteSupport {
     val rs = if (file.isFile) {
       format(analyzer.processFile(file.getAbsolutePath))
     } else {
-      format(analyzer.analyze(path, KnowFileTypes.knownFileTypes))
+      analyzer.analyze(path, KnowFileTypes.knownFileTypes).map(format).getOrElse("not result found")
     }
     if (args.length > 1) {
       val output = args(1).drop(2)
