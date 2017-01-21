@@ -17,7 +17,7 @@ object MainApp extends App with ReportFormatter with WriteSupport with StrictLog
     val file = new File(path)
     val analyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer
     val rs = if (file.isFile) {
-      format(analyzer.processFile(file.getAbsolutePath))
+      analyzer.processFile(file.getAbsolutePath).map(format).getOrElse(s"error processing $path")
     } else {
       logger.info("start analyzing...")
       val beginTime = new Date

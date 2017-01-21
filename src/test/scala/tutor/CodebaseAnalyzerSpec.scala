@@ -4,16 +4,18 @@ import org.scalatest.{FunSpec, ShouldMatchers}
 import tutor.utils.FileUtil
 import tutor.utils.FileUtil.Path
 
+import scala.util.{Success, Try}
+
 class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
 
   val codeBaseAnalyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer {
     override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = List("a.scala", "b.scala", "c.sbt", "d")
 
-    override def processFile(path: Path): SourceCodeInfo = path match {
-      case "a.scala" => SourceCodeInfo(path, path, 10)
-      case "b.scala" => SourceCodeInfo(path, path, 10)
-      case "c.sbt" => SourceCodeInfo(path, path, 5)
-      case "d" => SourceCodeInfo(path, path, 5)
+    override def processFile(path: Path): Try[SourceCodeInfo] = path match {
+      case "a.scala" => Success(SourceCodeInfo(path, path, 10))
+      case "b.scala" => Success(SourceCodeInfo(path, path, 10))
+      case "c.sbt" => Success(SourceCodeInfo(path, path, 5))
+      case "d" => Success(SourceCodeInfo(path, path, 5))
     }
   }
 
@@ -44,12 +46,7 @@ class CodebaseAnalyzerSpec extends FunSpec with ShouldMatchers {
       val emptyCodeAnalyzer = new CodebaseAnalyzer with DirectoryScanner with SourceCodeAnalyzer {
         override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = Vector[Path]()
 
-        override def processFile(path: Path): SourceCodeInfo = path match {
-          case "a.scala" => SourceCodeInfo(path, path, 10)
-          case "b.scala" => SourceCodeInfo(path, path, 10)
-          case "c.sbt" => SourceCodeInfo(path, path, 5)
-          case "d" => SourceCodeInfo(path, path, 5)
-        }
+        override def processFile(path: Path): Try[SourceCodeInfo] = ???
       }
       emptyCodeAnalyzer.analyze("anypath", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders) shouldBe None
     }
