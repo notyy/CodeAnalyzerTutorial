@@ -1,6 +1,6 @@
 package tutor
 
-import tutor.utils.FileUtil
+import tutor.utils.{BenchmarkUtil, FileUtil}
 import tutor.utils.FileUtil._
 
 case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avgLineCount: Double,
@@ -12,13 +12,19 @@ trait CodebaseAnalyzer {
   this: DirectoryScanner with SourceCodeAnalyzer =>
 
   def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
-    val files = scan(path, knownFileTypes,ignoreFolders)
+    val files = BenchmarkUtil.record("scan folders") {
+      scan(path, knownFileTypes, ignoreFolders)
+    }
     if (files.isEmpty) {
       None
     } else {
-      val sourceCodeInfos: Seq[SourceCodeInfo] = files.map(processFile).filter(_.isSuccess).map(_.get)
-      val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
-      Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
+      val sourceCodeInfos: Seq[SourceCodeInfo] = BenchmarkUtil.record("processing each file") {
+        files.map(processFile).filter(_.isSuccess).map(_.get)
+      }
+      BenchmarkUtil.record("make last result") {
+        val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
+        Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
+      }
     }
   }
 

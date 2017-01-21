@@ -7,7 +7,7 @@ import java.util.Date
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import tutor.PresetFilters.{ignoreFolders, knownFileTypes}
 import tutor.utils.FileUtil.Path
-import tutor.utils.WriteSupport
+import tutor.utils.{BenchmarkUtil, WriteSupport}
 
 object MainApp extends App with ReportFormatter with WriteSupport with StrictLogging {
   if (args.length < 1) {
@@ -19,15 +19,9 @@ object MainApp extends App with ReportFormatter with WriteSupport with StrictLog
     val rs = if (file.isFile) {
       analyzer.processFile(file.getAbsolutePath).map(format).getOrElse(s"error processing $path")
     } else {
-      logger.info("start analyzing...")
-      val beginTime = new Date
-      val anayRs = analyzer.analyze(path, knownFileTypes, ignoreFolders).map(format).getOrElse("not result found")
-      logger.info("analyze complete")
-      val endTime = new Date
-      val elapsed = new Date(endTime.getTime - beginTime.getTime)
-      val sdf = new SimpleDateFormat("mm:ss.SSS")
-      logger.info(s"total elapsed ${sdf.format(elapsed)}")
-      anayRs
+      BenchmarkUtil.record(s"analyze code under $path") {
+        analyzer.analyze(path, knownFileTypes, ignoreFolders).map(format).getOrElse("not result found")
+      }
     }
     if (args.length > 1) {
       val output = args(1).drop(2)
