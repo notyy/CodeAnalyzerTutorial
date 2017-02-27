@@ -21,7 +21,7 @@ trait CodebaseAnalyzer {
       val sourceCodeInfos: Seq[SourceCodeInfo] = BenchmarkUtil.record("processing each file") {
         processSourceFiles(files)
       }
-      BenchmarkUtil.record("make last result") {
+      BenchmarkUtil.record("make last result ##") {
         val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
         Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
       }
