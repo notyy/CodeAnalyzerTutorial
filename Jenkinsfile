@@ -6,12 +6,12 @@ pipeline {
                 sh 'sbt clean compile'
             }
         }
-        stage('unit test'{
+        stage('unit test') {
             steps {
                 sh 'sbt "testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
             }
         }
-        stage('functional test'{
+        stage('functional test') {
             steps {
                 sh 'sbt "testOnly * -- -n com.github.notyy.codeAnalyzer.FunctionalTest"'
             }
