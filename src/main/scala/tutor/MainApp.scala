@@ -1,8 +1,6 @@
 package tutor
 
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import tutor.PresetFilters.{ignoreFolders, knownFileTypes}
