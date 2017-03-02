@@ -6,9 +6,14 @@ pipeline {
                 sh 'sbt clean compile'
             }
         }
-        stage('unit test') {
+        stage('unit test with coverage') {
             steps {
-                sh 'sbt "testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
+                sh 'sbt "coverage testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
+            }
+        }
+        stage('rebuild without coverage') {
+            steps {
+                sh 'sbt clean compile'
             }
         }
         stage('functional test') {
