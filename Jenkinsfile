@@ -8,7 +8,8 @@ pipeline {
         }
         stage('unit test with coverage') {
             steps {
-                sh 'sbt "coverage testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
+                sh 'sbt coverage "testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
+                sh 'coverageReport'
             }
         }
         stage('rebuild without coverage') {
