@@ -10,6 +10,8 @@ pipeline {
             steps {
                 sh 'sbt coverage "testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
                 sh 'sbt coverageReport'
+                sh 'mkdir report'
+                sh 'mv -r target/scala-2.11/scoverage-report ./report/'
             }
         }
         stage('rebuild without coverage') {
