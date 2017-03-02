@@ -33,9 +33,19 @@ pipeline {
                 sh 'sbt assembly'
             }
         }
+        stage('predeploy test') {
+            steps {
+                sh 'echo predeploy test'
+            }
+        }
         stage('deploy') {
             steps {
                 sh 'echo deploy'
+            }
+        }
+        stage('health check') {
+            steps {
+                sh 'echo health check'
             }
         }
     }
