@@ -23,7 +23,7 @@ pipeline {
                 sh 'sbt clean compile'
             }
         }
-        parallel {
+        stage('FT&Assembly') {
             stage('functional test') {
                 steps {
                     sh 'sbt "testOnly * -- -n com.github.notyy.codeAnalyzer.FunctionalTest"'
