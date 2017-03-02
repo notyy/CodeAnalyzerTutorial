@@ -10,7 +10,6 @@ pipeline {
             steps {
                 sh 'sbt coverage "testOnly * -- -l com.github.notyy.codeAnalyzer.FunctionalTest"'
                 sh 'sbt coverageReport'
-                sh 'mkdir report'
                 sh 'cp -R target/scala-2.11/scoverage-report ./report/'
             }
         }
