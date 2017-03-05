@@ -28,6 +28,11 @@ pipeline {
                 sh 'sbt "testOnly * -- -n com.github.notyy.codeAnalyzer.FunctionalTest"'
             }
         }
+        stage('performance test') {
+            steps {
+                sh 'echo performance test'
+            }
+        }
         stage('assembly') {
             steps {
                 sh 'sbt assembly'
