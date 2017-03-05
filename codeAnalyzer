@@ -1,0 +1,1 @@
+java -jar ~/dev/bin/CodeAnalyzer.jar $1
