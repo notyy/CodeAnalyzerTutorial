@@ -45,7 +45,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh 'echo deploy'
+                sh 'cp target/scala-2.11/CodeAnalyzerTutorial-assembly-0.0.1.jar /Users/twer/dev/bin/CodeAnalyzer.jar'
             }
         }
         stage('health check') {
