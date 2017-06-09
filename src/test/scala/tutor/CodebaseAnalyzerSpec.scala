@@ -1,6 +1,7 @@
 package tutor
 
 import org.scalatest.{FeatureSpec, FunSpec, GivenWhenThen, ShouldMatchers}
+import tags.TestTypeTag.FunctionalTest
 import tutor.utils.FileUtil
 import tutor.utils.FileUtil.Path
 
@@ -35,7 +36,7 @@ class CodebaseAnalyzerSpec extends FeatureSpec with ShouldMatchers with GivenWhe
       Then("it should return None(instead of broken)")
       emptyCodeAnalyzer.analyze("anypath", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders) shouldBe None
     }
-    scenario("when analyze a folder with source code should return correct analyze result") {
+    scenario("when analyze a folder with source code should return correct analyze result", FunctionalTest) {
       Given("source code folder")
       //use test/fixutre as test data
       When("analyze the folder")
