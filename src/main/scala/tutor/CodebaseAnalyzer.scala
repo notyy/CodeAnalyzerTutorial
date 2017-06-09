@@ -9,7 +9,7 @@ case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avg
                        )
 
 trait CodebaseAnalyzer {
-  this: DirectoryScanner with SourceCodeAnalyzer =>
+  this: DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator =>
 
   def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
     val files = BenchmarkUtil.record("scan folders") {
@@ -22,28 +22,12 @@ trait CodebaseAnalyzer {
         processSourceFiles(files)
       }
       BenchmarkUtil.record("make last result ##") {
-        val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
+        val avgLineCount: Double = avgLines(files, sourceCodeInfos)
         Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
       }
     }
   }
 
-
   protected def processSourceFiles(files: Seq[Path]): Seq[SourceCodeInfo]
 
-  private[tutor] def countFileTypeNum(files: Seq[Path]): Map[String, Int] = {
-    files.groupBy(FileUtil.extractExtFileName).mapValues(_.length)
-  }
-
-  private[tutor] def longestFile(sourceCodeInfos: Seq[SourceCodeInfo]): SourceCodeInfo = {
-    sourceCodeInfos.max
-  }
-
-  private[tutor] def top10Files(sourceCodeInfos: Seq[SourceCodeInfo]): Seq[SourceCodeInfo] = {
-    sourceCodeInfos.sortBy(_.count).reverse.take(10)
-  }
-
-  private[tutor] def totalLineCount(sourceCodeInfos: Seq[SourceCodeInfo]): Int = {
-    sourceCodeInfos.map(_.count).sum
-  }
 }

@@ -15,10 +15,10 @@ object MainApp extends App with ReportFormatter with WriteSupport with StrictLog
     val file = new File(path)
     val analyzer = args.find(_.startsWith("-p")).map { _ =>
       logger.info("using par collection mode")
-      new CodebaseAnalyzerParImpl with DirectoryScanner with SourceCodeAnalyzer
+      new CodebaseAnalyzerParImpl with DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator
     }.getOrElse {
       logger.info("using sequence collection mode")
-      new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer
+      new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator
     }
     val rs = if (file.isFile) {
       analyzer.processFile(file.getAbsolutePath).map(format).getOrElse(s"error processing $path")
