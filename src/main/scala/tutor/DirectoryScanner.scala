@@ -16,17 +16,27 @@ trait DirectoryScanner extends StrictLogging {
     * @return
     */
   def scan(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = {
-    val files = new File(path).listFiles()
-    if (files == null) {
-      logger.warn(s"$path is not a legal directory")
-      Vector[Path]()
-    } else {
-      files.foldLeft(Vector[Path]()) { (acc, f) =>
+    scan(path)(Vector[Path](), ignoreFolders) {
+      (acc, f) =>
         val filePath = f.getAbsolutePath
         if (f.isFile && shouldAccept(f.getPath, knownFileTypes)) {
           acc :+ filePath
-        } else if (f.isDirectory && (!ignoreFolders.contains(FileUtil.extractLocalPath(f.getPath)))) {
-          acc ++ scan(filePath, knownFileTypes, ignoreFolders)
+        } else acc
+    }
+  }
+
+  def scan[T](path: Path)(initValue: T, ignoreFolders: Set[String])(processFile: (T, File) => T): T = {
+    val files = new File(path).listFiles()
+    if (files == null) {
+      logger.warn(s"$path is not a legal directory")
+      initValue
+    } else {
+      files.foldLeft(initValue) { (acc, file) =>
+        val filePath = file.getAbsolutePath
+        if (file.isFile) {
+          processFile(acc, file)
+        } else if (file.isDirectory && (!ignoreFolders.contains(FileUtil.extractLocalPath(file.getPath)))) {
+          scan(filePath)(acc, ignoreFolders)(processFile)
         } else {
           acc
         }
