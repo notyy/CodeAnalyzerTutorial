@@ -57,6 +57,10 @@ class CodebaseAnalyzerSpec extends FeatureSpec with ShouldMatchers with GivenWhe
       val codeAnalyzerParImpl = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator
       val analyzeResultOfPar = codeAnalyzerParImpl.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
       analyzeResult shouldBe analyzeResultOfPar
+      //test akka implementation
+//      val codeAnalyzerAkkaImpl = new CodebaseAnalyzerAkkaImpl with DirectoryScanner
+//      val analyzeResultOfAkka = codeAnalyzerAkkaImpl.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
+//      analyzeResult shouldBe analyzeResultOfAkka
     }
   }
 }

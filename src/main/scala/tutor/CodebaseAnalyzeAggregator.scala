@@ -20,8 +20,13 @@ trait CodebaseAnalyzeAggregator {
     sourceCodeInfos.map(_.count).sum
   }
 
-  def avgLines(files: Seq[Path], sourceCodeInfos: Seq[SourceCodeInfo]): Double = {
+  private[tutor] def avgLines(files: Seq[Path], sourceCodeInfos: Seq[SourceCodeInfo]): Double = {
     val avgLineCount = sourceCodeInfos.map(_.count).sum.toDouble / files.length
     avgLineCount
+  }
+
+  private[tutor] def aggregate(files:Seq[Path], sourceCodeInfos: Seq[SourceCodeInfo]): Option[CodebaseInfo]= {
+    val avgLineCount: Double = avgLines(files, sourceCodeInfos)
+    Some(CodebaseInfo(countFileTypeNum(files), totalLineCount(sourceCodeInfos), avgLineCount, longestFile(sourceCodeInfos), top10Files(sourceCodeInfos)))
   }
 }
