@@ -8,10 +8,10 @@ case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avg
                         top10Files: Seq[SourceCodeInfo]
                        )
 
-trait CodebaseAnalyzer {
+trait CodebaseAnalyzer extends CodebaseAnalyzerInterface {
   this: DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator =>
 
-  def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
+  override def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
     val files = BenchmarkUtil.record("scan folders") {
       scan(path, knownFileTypes, ignoreFolders)
     }
