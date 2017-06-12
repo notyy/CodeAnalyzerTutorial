@@ -53,6 +53,10 @@ class CodebaseAnalyzerSpec extends FeatureSpec with ShouldMatchers with GivenWhe
       codeBaseInfo.longestFileInfo.localPath shouldBe "SomeCode.scala"
       codeBaseInfo.top10Files.length shouldBe 2
       codeBaseInfo.totalLineCount shouldBe 32
+      //test par implementation
+      val codeAnalyzerParImpl = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator
+      val analyzeResultOfPar = codeAnalyzerParImpl.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
+      analyzeResult shouldBe analyzeResultOfPar
     }
   }
 }
