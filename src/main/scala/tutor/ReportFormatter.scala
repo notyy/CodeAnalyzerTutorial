@@ -2,7 +2,7 @@ package tutor
 
 trait ReportFormatter {
   def format(codebaseInfo: CodebaseInfo): String = {
-    val longestFileInfo: SourceCodeInfo = codebaseInfo.longestFileInfo
+    val longestFileInfo: Option[SourceCodeInfo] = codebaseInfo.longestFileInfo
     codebaseInfo.fileTypeNums.map {
       case (fileType, count) => s"$fileType     $count"
     }.mkString("\n") ++
@@ -10,17 +10,17 @@ trait ReportFormatter {
       ReportFormatter.separator ++ "\n\n" ++
       s"total line count: ${codebaseInfo.totalLineCount}" ++ "\n" ++
       s"avg line count: ${codebaseInfo.avgLineCount}" ++ "\n" ++
-      s"longest file: ${longestFileInfo.path}    ${longestFileInfo.count}" ++
+      s"longest file: ${longestFileInfo.map(_.path).getOrElse("not avaliable")}    ${longestFileInfo.map(_.lineCount).getOrElse(0)}" ++
       "\n" ++
       ReportFormatter.separator ++ "\n\n" ++
       "top 10 long files\n" ++
       codebaseInfo.top10Files.map {
-        s => s"${s.path}    ${s.count}"
+        s => s"${s.path}    ${s.lineCount}"
       }.mkString("\n")
   }
 
   def format(sourceCode: SourceCodeInfo): String = {
-    s"name: ${sourceCode.localPath}      lines: ${sourceCode.count}"
+    s"name: ${sourceCode.localPath}      lines: ${sourceCode.lineCount}"
   }
 }
 

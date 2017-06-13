@@ -50,14 +50,14 @@ class CodebaseAnalyzerSpec extends FeatureSpec with ShouldMatchers with GivenWhe
       fileTypeNums.keySet.size shouldBe 2
       fileTypeNums("scala") shouldBe 1
       fileTypeNums("java") shouldBe 1
-      codeBaseInfo.longestFileInfo.localPath shouldBe "SomeCode.scala"
+      codeBaseInfo.longestFileInfo.get.localPath shouldBe "SomeCode.scala"
       codeBaseInfo.top10Files.length shouldBe 2
       codeBaseInfo.totalLineCount shouldBe 32
       //test par implementation
       val codeAnalyzerParImpl = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with CodebaseAnalyzeAggregator
       val analyzeResultOfPar = codeAnalyzerParImpl.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
       analyzeResult shouldBe analyzeResultOfPar
-      //test akka implementation
+//      test akka implementation
 //      val codeAnalyzerAkkaImpl = new CodebaseAnalyzerAkkaImpl with DirectoryScanner
 //      val analyzeResultOfAkka = codeAnalyzerAkkaImpl.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
 //      analyzeResult shouldBe analyzeResultOfAkka

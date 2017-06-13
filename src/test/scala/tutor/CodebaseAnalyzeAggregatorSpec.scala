@@ -35,7 +35,7 @@ class CodebaseAnalyzeAggregatorSpec extends FeatureSpec with ShouldMatchers with
       Given("a.scala: 10 lines, b.scala: 5 lines")
       When("finding longest file")
       Then("a.scala should be returned")
-      codeBaseAnalyzeAggregator.longestFile(List(aInfo, bInfo)) shouldBe aInfo
+      codeBaseAnalyzeAggregator.longestFile(List(aInfo, bInfo)).get shouldBe aInfo
     }
     scenario("find top 10 longest files") {
       Given("11 files whose line of code is 1 to 11")

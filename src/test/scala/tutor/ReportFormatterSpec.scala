@@ -15,7 +15,7 @@ class ReportFormatterSpec extends FunSpec with ShouldMatchers {
       val codebaseInfo = CodebaseInfo(Map("sbt" -> 1, "scala" -> 2, FileUtil.EmptyFileType -> 1),
         totalLineCount = 15,
         avgLineCount = 7.5,
-        SourceCodeInfo("absolute/a.scala", "a.scala", 10), {
+        Some(SourceCodeInfo("absolute/a.scala", "a.scala", 10)), {
           for (i <- 10 to 1 by -1) yield SourceCodeInfo(s"absolute/$i.scala", s"$i.scala", i)
         }
       )

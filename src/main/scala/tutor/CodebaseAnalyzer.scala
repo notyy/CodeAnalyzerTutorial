@@ -3,8 +3,12 @@ package tutor
 import tutor.utils.{BenchmarkUtil, FileUtil}
 import tutor.utils.FileUtil._
 
+object CodebaseInfo {
+  def empty:CodebaseInfo = new CodebaseInfo(Map.empty[String,Int],0,0,null,Seq.empty[SourceCodeInfo])
+}
+
 case class CodebaseInfo(fileTypeNums: Map[String, Int], totalLineCount: Int, avgLineCount: Double,
-                        longestFileInfo: SourceCodeInfo,
+                        longestFileInfo: Option[SourceCodeInfo],
                         top10Files: Seq[SourceCodeInfo]
                        )
 
