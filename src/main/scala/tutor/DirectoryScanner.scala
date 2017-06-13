@@ -44,6 +44,16 @@ trait DirectoryScanner extends StrictLogging {
     }
   }
 
+  def foreachFile(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String])(processFile: File => Unit): Unit = {
+    scan(path)((), ignoreFolders) {
+      (acc, f) =>
+        val filePath = f.getAbsolutePath
+        if (f.isFile && shouldAccept(f.getPath, knownFileTypes)) {
+          processFile(f)
+        } else ()
+    }
+  }
+
   private def shouldAccept(path: Path, knownFileTypes: Set[String]): Boolean = {
     knownFileTypes.contains(FileUtil.extractExtFileName(path))
   }
