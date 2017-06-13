@@ -10,7 +10,7 @@ class SourceCodeAnalyzerSpec extends FunSpec with ShouldMatchers {
       val sourceCodeInfo = sca.processFile("./src/test/fixture/sourceFileSample").get
       sourceCodeInfo.localPath shouldBe "sourceFileSample"
       sourceCodeInfo.path shouldBe "./src/test/fixture/sourceFileSample"
-      sourceCodeInfo.count shouldBe 108
+      sourceCodeInfo.lineCount shouldBe 108
     }
   }
 }

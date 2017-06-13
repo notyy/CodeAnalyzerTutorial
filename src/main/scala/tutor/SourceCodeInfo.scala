@@ -6,12 +6,12 @@ import tutor.utils.FileUtil
 
 import scala.util.Try
 
-case class SourceCodeInfo(path: String, localPath: String, count: Int)
+final case class SourceCodeInfo(path: String, localPath: String, lineCount: Int)
 
 object SourceCodeInfo {
 
   implicit object SourceCodeInfoOrdering extends Ordering[SourceCodeInfo] {
-    override def compare(x: SourceCodeInfo, y: SourceCodeInfo): Int = x.count compare y.count
+    override def compare(x: SourceCodeInfo, y: SourceCodeInfo): Int = x.lineCount compare y.lineCount
   }
 
 }
