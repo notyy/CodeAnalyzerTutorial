@@ -12,13 +12,9 @@ class ReportFormatterSpec extends FunSpec with ShouldMatchers {
       rf.format(SourceCodeInfo("somepath", "some name", 10)) shouldBe "name: some name      lines: 10"
     }
     it("can format CodebaseInfo") {
-      val codebaseInfo = CodebaseInfo(Map("sbt" -> 1, "scala" -> 2, FileUtil.EmptyFileType -> 1),
-        totalLineCount = 15,
-        avgLineCount = 7.5,
-        Some(SourceCodeInfo("absolute/a.scala", "a.scala", 10)), {
-          for (i <- 10 to 1 by -1) yield SourceCodeInfo(s"absolute/$i.scala", s"$i.scala", i)
-        }
-      )
+      val codebaseInfo = CodebaseInfo(0, Map("sbt" -> 1, "scala" -> 2, FileUtil.EmptyFileType -> 1), totalLineCount = 15, avgLineCount = 7.5, Some(SourceCodeInfo("absolute/a.scala", "a.scala", 10)), {
+                      for (i <- 10 to 1 by -1) yield SourceCodeInfo(s"absolute/$i.scala", s"$i.scala", i)
+                    })
       rf.format(codebaseInfo) shouldBe
         s"""
            |sbt     1
