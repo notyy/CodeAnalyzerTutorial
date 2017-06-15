@@ -17,4 +17,16 @@ object BenchmarkUtil extends StrictLogging {
     logger.info(s"$actionDesc total elapsed ${sdf.format(elapsed)}")
     rs
   }
+  def recordStart(actionDesc: String):Date = {
+    logger.info(s"$actionDesc begin")
+    new Date
+  }
+
+  def recordElapse(actionDesc: String, beginFrom: Date):Unit = {
+    logger.info(s"$actionDesc ended")
+    val endTime = new Date
+    val elapsed = new Date(endTime.getTime - beginFrom.getTime)
+    val sdf = new SimpleDateFormat("mm:ss.SSS")
+    logger.info(s"$actionDesc total elapsed ${sdf.format(elapsed)}")
+  }
 }
