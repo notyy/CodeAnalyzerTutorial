@@ -12,5 +12,4 @@ object OtherCode {
     val lines = source.getLines.toList
     new SourceCodeInfo(path, extractLocalPath(path), lines)
   }
-
 }
