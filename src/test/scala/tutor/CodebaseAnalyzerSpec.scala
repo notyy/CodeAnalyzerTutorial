@@ -1,13 +1,12 @@
 package tutor
 
-import org.scalatest.{FeatureSpec, FunSpec, GivenWhenThen, ShouldMatchers}
-import tags.TestTypeTag.FunctionalTest
-import tutor.utils.FileUtil
+import _root_.tags.TestTypeTag.FunctionalTest
+import org.scalatest._
 import tutor.utils.FileUtil.Path
 
 import scala.util.{Success, Try}
 
-class CodebaseAnalyzerSpec extends FeatureSpec with ShouldMatchers with GivenWhenThen {
+class CodebaseAnalyzerSpec extends FeatureSpec with Matchers with GivenWhenThen {
 
   val codeBaseAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer {
     override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = List("a.scala", "b.scala", "c.sbt", "d")

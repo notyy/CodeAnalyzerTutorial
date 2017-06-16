@@ -1,8 +1,8 @@
 package tutor.utils
 
-import org.scalatest.{FunSpec, ShouldMatchers}
+import org.scalatest.{FunSpec, Matchers}
 
-class FileUtilSpec extends FunSpec with ShouldMatchers {
+class FileUtilSpec extends FunSpec with Matchers {
   describe("FileUtil"){
     it("can extract file extension name"){
       val path = "src/test/build.sbt"

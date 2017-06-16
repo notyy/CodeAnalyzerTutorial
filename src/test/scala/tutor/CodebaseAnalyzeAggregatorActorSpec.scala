@@ -2,12 +2,12 @@ package tutor
 
 import akka.actor.ActorSystem
 import akka.testkit.TestProbe
-import org.scalatest.{FunSpec, Matchers, ShouldMatchers}
+import org.scalatest.{FunSpec, Matchers}
 import tutor.CodebaseAnalyzeAggregatorActor.{AnalyzeDirectory, Report}
 
 import scala.concurrent.duration._
 
-class CodebaseAnalyzeAggregatorActorSpec extends FunSpec with ShouldMatchers {
+class CodebaseAnalyzeAggregatorActorSpec extends FunSpec with Matchers {
   describe("CodebaseAnalyzeAggregatorActor") {
     it("can analyze given file path, aggregate results of all individual files") {
       implicit val system = ActorSystem("CodebaseAnalyzeAggregator")

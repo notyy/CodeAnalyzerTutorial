@@ -1,9 +1,9 @@
 package tutor
 
-import org.scalatest.{FunSpec, ShouldMatchers}
+import org.scalatest.{FunSpec, Matchers}
 import tutor.utils.FileUtil
 
-class ReportFormatterSpec extends FunSpec with ShouldMatchers {
+class ReportFormatterSpec extends FunSpec with Matchers {
 
   val rf = new ReportFormatter {}
 

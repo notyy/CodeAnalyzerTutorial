@@ -1,8 +1,8 @@
 package tutor
 
-import org.scalatest.{FunSpec, ShouldMatchers}
+import org.scalatest.{FunSpec, Matchers}
 
-class CodebaseInfoSpec extends FunSpec with ShouldMatchers{
+class CodebaseInfoSpec extends FunSpec with Matchers{
   describe("codeBaseInfo"){
     it("empty CodeBaseInfo + SourceCodeInfo = CodeBaseInfo(contains this SourceCodeInfo)"){
       val sourceCodeInfo = SourceCodeInfo("1.scala", "1.scala", 10)
