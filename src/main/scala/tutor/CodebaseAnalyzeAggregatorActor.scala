@@ -53,7 +53,7 @@ class CodebaseAnalyzeAggregatorActor extends Actor with ActorLogging with Direct
         router.route(NewFile(file.getAbsolutePath), context.self)
       }
       import context.dispatcher
-      timeoutTimer = context.system.scheduler.scheduleOnce(3.seconds, context.self, Timeout)
+      timeoutTimer = context.system.scheduler.scheduleOnce((fileCount / 1000).seconds, context.self, Timeout)
     }
     case Complete(Success(sourceCodeInfo: SourceCodeInfo)) => {
       completeCount += 1
@@ -63,7 +63,7 @@ class CodebaseAnalyzeAggregatorActor extends Actor with ActorLogging with Direct
     case Complete(Failure(exception)) => {
       completeCount += 1
       failCount += 1
-      log.warning("processing file failed", exception)
+      log.warning("processing file failed {}", exception)
       finishIfAllComplete()
     }
     case Timeout => {
