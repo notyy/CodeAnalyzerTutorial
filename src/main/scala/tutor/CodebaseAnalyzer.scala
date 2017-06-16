@@ -18,14 +18,20 @@ case class CodebaseInfo(totalFileNums: Int, fileTypeNums: Map[String, Int], tota
     }
     val newTotalLineCount = totalLineCount + sourceCodeInfo.lineCount
     val newTotalFileNum = totalFileNums + 1
-    CodebaseInfo(newTotalFileNum,newFileTypeNums,newTotalLineCount, newTotalLineCount / newTotalFileNum,
-      if(longestFileInfo.isEmpty) {
+    CodebaseInfo(newTotalFileNum, newFileTypeNums, newTotalLineCount, newTotalLineCount / newTotalFileNum,
+      if (longestFileInfo.isEmpty) {
         Some(sourceCodeInfo)
-      }else{
-        if(longestFileInfo.get.lineCount < sourceCodeInfo.lineCount) Some(sourceCodeInfo)
+      } else {
+        if (longestFileInfo.get.lineCount < sourceCodeInfo.lineCount) Some(sourceCodeInfo)
         else longestFileInfo
       },
-      (top10Files :+ sourceCodeInfo).sortBy(_.lineCount).reverse.take(10)
+      if (top10Files.isEmpty) {
+        Vector(sourceCodeInfo)
+      } else if (top10Files.size < 10 || sourceCodeInfo.lineCount > top10Files.last.lineCount) {
+        (top10Files :+ sourceCodeInfo).sortBy(_.lineCount).reverse.take(10)
+      } else {
+        top10Files
+      }
     )
   }
 }
