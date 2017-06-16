@@ -24,7 +24,9 @@ trait SourceCodeAnalyzer extends StrictLogging {
       try {
         val lines = source.getLines.toList
         SourceCodeInfo(path, FileUtil.extractLocalPath(path), lines.length)
-      }finally {
+      } catch {
+        case e => throw new IllegalArgumentException(s"error processing file $path", e)
+      } finally {
         source.close()
       }
     }
