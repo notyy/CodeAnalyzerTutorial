@@ -14,6 +14,8 @@ libraryDependencies ++= Seq(
   "org.pegdown" % "pegdown" % "1.0.2" % "test", //used in html report
   "org.scalatest" %% "scalatest" % "3.0.1" % "test",
   "org.slf4j" % "slf4j-api" % "1.7.7",
+  "com.typesafe.slick" %% "slick" % "3.2.1",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.2.1",
   "ch.qos.logback" % "logback-classic" % "1.1.2",
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "com.typesafe.akka" %% "akka-actor" % "2.5.2",
