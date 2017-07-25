@@ -37,7 +37,7 @@ case class CodebaseInfo(totalFileNums: Int, fileTypeNums: Map[String, Int], tota
 }
 
 trait CodebaseAnalyzer extends CodebaseAnalyzerInterface {
-  this: DirectoryScanner with SourceCodeAnalyzer =>
+  this: DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder=>
 
   override def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
     val files = BenchmarkUtil.record("scan folders") {
@@ -50,7 +50,9 @@ trait CodebaseAnalyzer extends CodebaseAnalyzerInterface {
         processSourceFiles(files)
       }
       BenchmarkUtil.record("make last result ##") {
-        Some(sourceCodeInfos.foldLeft(CodebaseInfo.empty)(_ + _))
+        val codebaseInfo = sourceCodeInfos.foldLeft(CodebaseInfo.empty)(_ + _)
+        record(codebaseInfo)
+        Some(codebaseInfo)
       }
     }
   }

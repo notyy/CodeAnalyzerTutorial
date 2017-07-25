@@ -8,7 +8,7 @@ import scala.util.{Success, Try}
 
 class CodebaseAnalyzerSpec extends FeatureSpec with Matchers with GivenWhenThen {
 
-  val codeBaseAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer {
+  val codeBaseAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder {
     override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = List("a.scala", "b.scala", "c.sbt", "d")
 
     override def processFile(path: Path): Try[SourceCodeInfo] = path match {
@@ -26,7 +26,7 @@ class CodebaseAnalyzerSpec extends FeatureSpec with Matchers with GivenWhenThen 
   feature("analyze source code folder and give statistic results") {
     scenario("when directory scanner returns empty, code analyzer should return None") {
       Given("a directory contains no source code file")
-      val emptyCodeAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer {
+      val emptyCodeAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder {
         override def scan(path: Path, knowFileTypes: Set[String], ignoreFolders: Set[String]): Seq[Path] = Vector[Path]()
 
         override def processFile(path: Path): Try[SourceCodeInfo] = ???
@@ -39,7 +39,7 @@ class CodebaseAnalyzerSpec extends FeatureSpec with Matchers with GivenWhenThen 
       Given("source code folder")
       //use test/fixutre as test data
       When("analyze the folder")
-      val codeAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer
+      val codeAnalyzer = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder
       val analyzeResult = codeAnalyzer.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
       Then("it should return correct result")
       analyzeResult shouldBe 'defined
@@ -53,7 +53,7 @@ class CodebaseAnalyzerSpec extends FeatureSpec with Matchers with GivenWhenThen 
       codeBaseInfo.top10Files.length shouldBe 2
       codeBaseInfo.totalLineCount shouldBe 31
       //test par implementation
-      val codeAnalyzerParImpl = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer
+      val codeAnalyzerParImpl = new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder
       val analyzeResultOfPar = codeAnalyzerParImpl.analyze("src/test/fixture", PresetFilters.knownFileTypes, PresetFilters.ignoreFolders)
       analyzeResult shouldBe analyzeResultOfPar
     }
