@@ -37,7 +37,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.2",
   "com.typesafe.akka" %% "akka-testkit" % "2.5.2",
   "com.typesafe.akka" %% "akka-typed" % "2.5.2",
-  "com.typesafe.akka" %% "akka-contrib" % "2.5.2"
+  "com.typesafe.akka" %% "akka-contrib" % "2.5.2",
+  "com.h2database" % "h2" % "1.4.196"
 )
 
 //   TODO reopen it later
