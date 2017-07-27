@@ -4,6 +4,7 @@ import java.io.File
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import tutor.PresetFilters.{ignoreFolders, knownFileTypes}
+import tutor.repo.{AnalyzeHistoryRepository, H2DB}
 import tutor.utils.FileUtil.Path
 import tutor.utils.{BenchmarkUtil, WriteSupport}
 
@@ -15,10 +16,10 @@ object MainApp extends App with ReportFormatter with WriteSupport with StrictLog
     val file = new File(path)
     val analyzer = args.find(_.startsWith("-p")).map { _ =>
       logger.info("using par collection mode")
-      new CodebaseAnalyzerParImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder
+      new CodebaseAnalyzerParImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRepository with H2DB
     }.getOrElse {
       logger.info("using sequence collection mode")
-      new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder
+      new CodebaseAnalyzerSeqImpl with DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRepository with H2DB
     }
     val rs = if (file.isFile) {
       analyzer.processFile(file.getAbsolutePath).map(format).getOrElse(s"error processing $path")

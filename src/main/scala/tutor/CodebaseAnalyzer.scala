@@ -1,7 +1,9 @@
 package tutor
 
+import tutor.repo.AnalyzeHistoryRepository
 import tutor.utils.{BenchmarkUtil, FileUtil}
 import tutor.utils.FileUtil._
+
 import scala.math.max
 
 object CodebaseInfo {
@@ -37,7 +39,7 @@ case class CodebaseInfo(totalFileNums: Int, fileTypeNums: Map[String, Int], tota
 }
 
 trait CodebaseAnalyzer extends CodebaseAnalyzerInterface {
-  this: DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRecorder=>
+  this: DirectoryScanner with SourceCodeAnalyzer with AnalyzeHistoryRepository=>
 
   override def analyze(path: Path, knownFileTypes: Set[String], ignoreFolders: Set[String]): Option[CodebaseInfo] = {
     val files = BenchmarkUtil.record("scan folders") {
@@ -51,7 +53,7 @@ trait CodebaseAnalyzer extends CodebaseAnalyzerInterface {
       }
       BenchmarkUtil.record("make last result ##") {
         val codebaseInfo = sourceCodeInfos.foldLeft(CodebaseInfo.empty)(_ + _)
-        record(codebaseInfo)
+        record(path, codebaseInfo)
         Some(codebaseInfo)
       }
     }
