@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh 'sbt coverage test'
                 sh 'sbt coverageReport'
-                sh 'cp -R target/scala-2.11/scoverage-report ./report/'
+                sh 'cp -R target/scala-2.12/scoverage-report ./report/'
             }
         }
         stage('rebuild without coverage') {
@@ -45,7 +45,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh 'cp target/scala-2.11/CodeAnalyzerTutorial-assembly-0.0.1.jar /Users/twer/dev/bin/CodeAnalyzer.jar'
+                sh 'cp target/scala-2.12/CodeAnalyzerTutorial-assembly-0.0.1.jar /Users/twer/dev/bin/CodeAnalyzer.jar'
             }
         }
         stage('health check') {
