@@ -11,6 +11,10 @@ class AnalyzeHistoryRepositoryTest extends FunSpec with Matchers with Schemas wi
   with AnalyzeHistoryRepository with BeforeAndAfter {
 
   before {
+    Await.result(setupDB(), 5 seconds)
+  }
+
+  after {
     Await.result(dropDB(), 5 seconds)
   }
 
@@ -19,10 +23,8 @@ class AnalyzeHistoryRepositoryTest extends FunSpec with Matchers with Schemas wi
 //      AnalyzeHistoryRecorder.setupDB()
 //    }
     it("can insert analyzeHistory"){
-      val c = Await.result(setupDB()
-        .flatMap{ _ =>
+      val c = Await.result(
         record("some path",CodebaseInfo(1, Map("java" -> 1), 1, 10,None,Nil))
-      }
         , 10 seconds)
       c shouldBe 1
     }
