@@ -1,8 +1,8 @@
 package tutor
 
-import com.typesafe.scalalogging.slf4j.StrictLogging
-import tutor.utils.FileUtil._
+import com.typesafe.scalalogging.StrictLogging
 import tutor.utils.FileUtil
+import tutor.utils.FileUtil._
 
 import scala.util.Try
 

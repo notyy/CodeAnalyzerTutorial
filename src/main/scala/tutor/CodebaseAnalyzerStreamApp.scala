@@ -3,7 +3,7 @@ package tutor
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 import tutor.utils.BenchmarkUtil
 
 import scala.collection.mutable.ArrayBuffer

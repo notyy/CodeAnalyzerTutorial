@@ -2,7 +2,7 @@ package tutor
 
 import java.io.File
 
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 import tutor.PresetFilters.{ignoreFolders, knownFileTypes}
 import tutor.repo.{AnalyzeHistoryRepository, H2DB}
 import tutor.utils.FileUtil.Path

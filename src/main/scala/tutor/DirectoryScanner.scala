@@ -2,7 +2,7 @@ package tutor
 
 import java.io.File
 
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 import tutor.utils.FileUtil
 import tutor.utils.FileUtil.Path
 

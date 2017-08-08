@@ -3,7 +3,7 @@ package tutor.utils
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 
 object BenchmarkUtil extends StrictLogging {
   def record[T](actionDesc: String)(action: => T): T = {
