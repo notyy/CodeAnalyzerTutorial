@@ -38,20 +38,5 @@ pipeline {
                 sh 'sbt assembly'
             }
         }
-        stage('Sanity check') {
-            steps {
-                input "confirm to deploy?"
-            }
-        }
-        stage('deploy') {
-            steps {
-                sh 'cp target/scala-2.12/CodeAnalyzerTutorial-assembly-0.0.1.jar /Users/twer/dev/bin/CodeAnalyzer.jar'
-            }
-        }
-        stage('health check') {
-            steps {
-                sh 'echo health check'
-            }
-        }
     }
 }
