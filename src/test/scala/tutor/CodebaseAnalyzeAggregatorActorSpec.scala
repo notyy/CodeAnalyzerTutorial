@@ -23,7 +23,7 @@ class CodebaseAnalyzeAggregatorActorSpec extends FunSpec with Matchers {
       result.avgLineCount shouldBe 15.0
       result.longestFileInfo.get.localPath shouldBe "SomeCode.scala"
       result.top10Files should have size 2
-      result.top10Files should contain (SourceCodeInfo("/Users/twer/source/scala/CodeAnalyzerTutorial/src/test/fixture/sub/SomeCode.scala", "SomeCode.scala", 16))
+      result.top10Files.map(file => (file.localPath,file.lineCount)) should contain (("SomeCode.scala", 16))
     }
   }
 }
