@@ -38,9 +38,9 @@ pipeline {
                 sh 'sbt assembly'
             }
         }
-        stage('predeploy test') {
+        stage('Sanity check') {
             steps {
-                sh 'echo predeploy test'
+                input "confirm to deploy?"
             }
         }
         stage('deploy') {
