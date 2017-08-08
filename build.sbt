@@ -27,7 +27,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-cluster-tools" % "2.5.3",
   "com.typesafe.akka" %% "akka-distributed-data" % "2.5.3",
   "com.typesafe.akka" %% "akka-multi-node-testkit" % "2.5.3",
-  "com.typesafe.akka" %% "akka-osgi" % "2.5.3",
   "com.typesafe.akka" %% "akka-persistence" % "2.5.3",
   "com.typesafe.akka" %% "akka-persistence-query" % "2.5.3",
   "com.typesafe.akka" %% "akka-persistence-tck" % "2.5.3",
