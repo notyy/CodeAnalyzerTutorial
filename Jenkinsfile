@@ -36,6 +36,7 @@ pipeline {
         stage('assembly') {
             steps {
                 sh 'sbt assembly'
+                sh 'echo assembly successfully'
             }
         }
     }
