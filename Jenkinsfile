@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('compile') {
             steps {
-                sh 'try connect from prev build'
+                sh 'echo try connect from prev build'
                 sh 'echo build number is ${BUILD_NUMBER}'
                 sh 'sbt clean compile'
             }
