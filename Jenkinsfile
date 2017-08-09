@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('compile') {
             steps {
+                sh 'echo build number is $buildNumber'
                 sh 'sbt clean compile'
             }
         }
