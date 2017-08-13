@@ -2,7 +2,7 @@ package tutor
 
 import java.util.Date
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Cancellable, Props}
+import akka.actor.{Actor, ActorLogging, ActorRef, Cancellable, Props, Terminated}
 import akka.routing.{ActorRefRoutee, RoundRobinRoutingLogic, Router}
 import tutor.CodebaseAnalyzeAggregatorActor.{AnalyzeDirectory, Complete, Report, Timeout}
 import tutor.SourceCodeAnalyzerActor.NewFile
@@ -71,6 +71,11 @@ class CodebaseAnalyzeAggregatorActor extends Actor with ActorLogging with Direct
       controller ! Report(result)
       BenchmarkUtil.recordElapse(s"analyze folder $currentPath", beginTime)
     }
+    case Terminated(a) =>
+      router = router.removeRoutee(a)
+      val r = context.actorOf(Props[SourceCodeAnalyzerActor])
+      context watch r
+      router = router.addRoutee(r)
     case x@_ => log.error(s"receive unknown message $x")
   }
 
